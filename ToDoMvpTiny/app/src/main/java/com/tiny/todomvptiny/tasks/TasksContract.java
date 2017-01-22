@@ -58,7 +58,7 @@ public interface TasksContract {
         void showNoCompletedTasks();
 
         //显示信息保存成功的界面
-        void showSuccessfulSavedMessage();
+        void showSuccessfullySavedMessage();
 
         //是否活跃
         boolean isActive();

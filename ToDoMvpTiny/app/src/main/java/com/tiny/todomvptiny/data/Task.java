@@ -9,7 +9,7 @@ import java.util.UUID;
 
 /**
  * Created by tiny on 17/1/6.
- * Immotable model class for a Task.
+ * Immutable model class for a Task.
  */
 public final class Task {
     @NonNull
