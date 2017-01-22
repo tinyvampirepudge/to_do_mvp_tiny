@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.tiny.todomvptiny.R;
+import com.tiny.todomvptiny.mock.Injection;
 import com.tiny.todomvptiny.util.ActivityUtils;
 import com.tiny.todomvptiny.util.ToastUtils;
 
@@ -19,6 +20,7 @@ public class TasksActivity extends AppCompatActivity {
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
     private Context mContext;
     private DrawerLayout mDrawerLayout;
+    private TasksPresenter mTasksPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +52,20 @@ public class TasksActivity extends AppCompatActivity {
         }
 
         //Create the presenter
-
+        mTasksPresenter = new TasksPresenter(
+                Injection.provideTasksRepository(getApplicationContext()), tasksFragment);
 
         //Load previously saved state, if available
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null) {
             TasksFilterType currentFiltering =
                     (TasksFilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_KEY);
-//            mTasksPresenter.setFiltering(currentFiltering);
+            mTasksPresenter.setFiltering(currentFiltering);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        outState.putSerializable(CURRENT_FILTERING_KEY, mTasksPresenter.getFiltering());
+        outState.putSerializable(CURRENT_FILTERING_KEY, mTasksPresenter.getFiltering());
         super.onSaveInstanceState(outState);
     }
 
