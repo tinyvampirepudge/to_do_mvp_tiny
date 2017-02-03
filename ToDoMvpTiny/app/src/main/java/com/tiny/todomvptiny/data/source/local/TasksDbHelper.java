@@ -11,11 +11,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class TasksDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Tasks.db";
-    public static final String TEXT_TYPE = "TEXT";
-    public static final String BOOLEAN_TYPE = "INTEGER";
+    public static final String TEXT_TYPE = " TEXT";
+    public static final String BOOLEAN_TYPE = " INTEGER";
     public static final String COMMA_SEP = ",";
     public static final String SQL_CREATE_ENTRIES =
-            "CREATE TALE " + TasksPersistenceContract.TasksEntry.TABLE_NAME + " (" +
+            "CREATE TABLE " + TasksPersistenceContract.TasksEntry.TABLE_NAME + " (" +
                     TasksPersistenceContract.TasksEntry._ID + TEXT_TYPE + " PRIVATE KEY," +
                     TasksPersistenceContract.TasksEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
                     TasksPersistenceContract.TasksEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +

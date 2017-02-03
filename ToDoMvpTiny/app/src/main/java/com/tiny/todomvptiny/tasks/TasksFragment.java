@@ -303,6 +303,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
                 return true;
             }
         });
+        popup.show();
     }
 
     @Override
