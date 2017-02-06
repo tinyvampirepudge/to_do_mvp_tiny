@@ -1,6 +1,7 @@
 package com.tiny.todomvptiny.tasks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,8 +14,8 @@ import android.view.MenuItem;
 
 import com.tiny.todomvptiny.R;
 import com.tiny.todomvptiny.mock.Injection;
+import com.tiny.todomvptiny.statistics.StatisticsActivity;
 import com.tiny.todomvptiny.util.ActivityUtils;
-import com.tiny.todomvptiny.util.ToastUtils;
 
 public class TasksActivity extends AppCompatActivity {
     private static final String CURRENT_FILTERING_KEY = "CURRENT_FILTERING_KEY";
@@ -81,11 +82,13 @@ public class TasksActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.list_navigation_menu_item:
                         //Do nothing, we're already on that screen
-                        ToastUtils.showSingleToast(mContext, "to tasks activity");
                         break;
                     case R.id.statistics_navigation_menu_item:
                         //to statistics activity.
-                        ToastUtils.showSingleToast(mContext, "to task detail activity");
+                        Intent intent = new Intent(TasksActivity.this, StatisticsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                         break;
                     default:
                         break;
@@ -108,5 +111,10 @@ public class TasksActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mTasksPresenter.result(requestCode, resultCode);
     }
 }

@@ -1,7 +1,10 @@
 package com.tiny.todomvptiny.tasks;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.tiny.todomvptiny.addedittask.AddEditTaskActivity;
 import com.tiny.todomvptiny.data.Task;
 import com.tiny.todomvptiny.data.source.TasksDataSource;
 import com.tiny.todomvptiny.data.source.TasksRepository;
@@ -41,15 +44,16 @@ public class TasksPresenter implements TasksContract.Presenter {
     @Override
     public void result(int requestCode, int resultCode) {
         //If a task was successfully added. show snackbar.
-//        if (AddEditTaskActivity.REQUEST_ADD_TASK == requestCode && Activity.RESULT_OK == resultCode) {
-//            mTasksView.showSuccessfullySavedMessage();
-//        }
+        if (AddEditTaskActivity.REQUEST_ADD_TASK == requestCode && Activity.RESULT_OK == resultCode) {
+            mTasksView.showSuccessfullySavedMessage();
+        }
     }
 
     @Override
     public void loadTasks(boolean forceUpdate) {
         //Simplification for sample: a network reload will be forced on first load.
         loadTasks(forceUpdate || mFirstLoad, true);
+        mFirstLoad = false;
     }
 
     private void loadTasks(boolean forceUpdate, final boolean showLoadingUI) {
@@ -107,7 +111,7 @@ public class TasksPresenter implements TasksContract.Presenter {
             @Override
             public void onDataNoAvailable() {
                 //The view may not be able to handle UI updates anymore
-                if (!!mTasksView.isActive()) {
+                if (!mTasksView.isActive()) {
                     return;
                 }
                 mTasksView.showLoadingTasksError();
@@ -128,6 +132,7 @@ public class TasksPresenter implements TasksContract.Presenter {
     }
 
     private void showFilterLabel() {
+        Log.e("showFilterLabel","mCurrentFiltering --> " + mCurrentFiltering.toString());
         switch (mCurrentFiltering) {
             case ACTIVE_TASKS:
                 mTasksView.showActiveFilterLabel();
@@ -142,6 +147,7 @@ public class TasksPresenter implements TasksContract.Presenter {
     }
 
     private void processEmptyTasks() {
+        Log.e("processEmptyTasks","mCurrentFiltering --> " + mCurrentFiltering.toString());
         switch (mCurrentFiltering) {
             case ACTIVE_TASKS:
                 mTasksView.showNoActiveTasks();

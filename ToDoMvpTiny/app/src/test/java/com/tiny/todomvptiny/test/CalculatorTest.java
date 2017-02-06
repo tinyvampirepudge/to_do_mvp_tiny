@@ -61,7 +61,8 @@ public class CalculatorTest {
         Assert.assertEquals("multiply failed", 12, product);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+//    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testDivide()throws Exception{
         double result = calculator.divide(4,1);
         Assert.assertEquals("testDivide failed",4d,result,0.000001d);

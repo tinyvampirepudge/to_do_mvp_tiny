@@ -1,5 +1,6 @@
 package com.tiny.todomvptiny.tasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -20,8 +21,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tiny.todomvptiny.R;
+import com.tiny.todomvptiny.addedittask.AddEditTaskActivity;
 import com.tiny.todomvptiny.data.Task;
-import com.tiny.todomvptiny.util.ToastUtils;
+import com.tiny.todomvptiny.taskdetail.TaskDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,14 +191,17 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void showAddTask() {
-//        Intent intent = new Intent(getContext(),AddEditTaskActivity.class);
-//        startActivityForResult(intent,addEditTaskActivity.REQUEST_ADD_TASK);
-        ToastUtils.showSingleToast(getContext(), "添加任务");
+        Intent intent = new Intent(getContext(),AddEditTaskActivity.class);
+        startActivityForResult(intent,AddEditTaskActivity.REQUEST_ADD_TASK);
+//        ToastUtils.showSingleToast(getContext(), "添加任务");
     }
 
     @Override
     public void showTaskDetailsUi(String taskId) {
-        ToastUtils.showSingleToast(getContext(), "查看详情页！");
+//        ToastUtils.showSingleToast(getContext(), "查看详情页！");
+        Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
+        intent.putExtra(TaskDetailActivity.EXTRA_TASK_ID,taskId);
+        startActivity(intent);
     }
 
     @Override
@@ -230,7 +235,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     private void showNoTasksViews(String mainText, int iconRes, boolean showAddView) {
         mTasksView.setVisibility(View.GONE);
-        mNoTaskMainView.setVisibility(View.VISIBLE);
+        mNoTasksView.setVisibility(View.VISIBLE);
 
         mNoTaskMainView.setText(mainText);
         mNoTaskIcon.setImageDrawable(getResources().getDrawable(iconRes));
@@ -303,6 +308,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
                 return true;
             }
         });
+
         popup.show();
     }
 
